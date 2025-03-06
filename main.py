@@ -1,43 +1,37 @@
 from flask import Flask, request, render_template, jsonify
+import random
 
 app = Flask(__name__)
 
 # @app.error_handler(404)
 
-# list_doctor_data = sa.insert(db.ListDoctorClinic).values([
-#     {"clinic_id":"1", "doctor_id":"1"},
-#     {"clinic_id":"2", "doctor_id":"2"},
-#     {"clinic_id":"1", "doctor_id":"3"},
-#     {"clinic_id":"2", "doctor_id":"4"},
-#     {"clinic_id":"1", "doctor_id":"5"},
-#     {"clinic_id":"2", "doctor_id":"1"}
-# ])
+# list_user_db = {
+#     "users": [
+#         {
+#             "id": 1,
+#             "email": "andi@mail.com",
+#             "password": "anypassword",
+#             "first_name": "andi",
+#             "last_name": "cihuy",
+#             "full_name": "andi cihuy"
+#         },
+#         {
+#             "id": 2,
+#             "email": "bejo@mail.com",
+#             "password": "nopassword",
+#             "first_name": "bejo",
+#             "last_name": "jokowi",
+#             "full_name": "bejo jokowi"
+#         },
+#         {
+#             "id": 3,
+#             "email": "cindy@mail.com",
+#             "password": "passwordwrong"
+#         },
+#     ]
+# }
 
-list_user_db = {
-    "users":[
-        {
-            "id":1,
-            "email": "andi@mail.com",
-            "password": "anypassword",
-            "first_name": "andi",
-            "last_name": "cihuy",
-            "full_name": "andi cihuy"
-        },
-        {
-            "id":2,
-            "email": "bejo@mail.com",
-            "password": "nopassword"
-            "first_name": "bejo",
-            "last_name": "jokowi",
-            "full_name": "bejo jokowi"
-        },
-        {
-            "id":3,
-            "email": "cindy@mail.com",
-            "password": "passwordwrong"
-        },
-    ]
-} 
+list_user_db = {"users": []}
 
 @app.route('/', methods=['GET', 'POST'])
 
@@ -45,37 +39,28 @@ list_user_db = {
 
 def register():
     register_data = request.json
-    # bentuk data register_data 
-    # js = json
-    # python = dict / dictionary
     email = register_data.get("email")
     password = register_data.get("password")
     first_name = register_data.get("first_name")
     last_name = register_data.get("last_name")
     full_name = f"{first_name} {last_name}"
     user_data = {
-        ""
+        "id": random.randint(1, 1000),
+        "email": email,     
+        "password": password,
+        "first_name": first_name,
+        "last_name": last_name,
+        "full_name": full_name,
+        "created_at": "2022-09-08 15:00:00"
     }
-    list_user_db["users"].update()
-    return jsonify({"data": register_data, "message": f"{email} registered successfully", "success": True}), 201
+    list_user_db["users"].append(user_data)
+    return jsonify({"data": list_user_db, "message": f"{email} registered successfully", "success": True}), 201
+
+@app.route("/users", methods=["GET"])
+
+def get_users():
+    return jsonify({"data": list_user_db, "message": "User data retrieved successfully", "success": True})
     
-    # if request.method == 'POST':
-    #     name = request.form.get('name')
-    #     email = request.form.get('email')
-    #     password = request.f 
-    #     # Check if the form data is valid
-    #     if not name or not email or not password:
-    #         return "All fields are required"
-
-    #     # Store the user data in a database or file
-    #     # For demonstration purposes, we'll just print the data
-    #     print(f"Name: {name}")
-    #     print(f"Email: {email}")
-    #     print(f"Password: {password}")
- 
-    #     return "Registration successful"
-
-    # return render_template('register.html'
 
 def main():
     return render_template('index.html')
