@@ -92,6 +92,8 @@ def update_user(user_id):
     user["full_name"] = full_name
     return jsonify({"data": user, "message": "User data updated successfully", "success": True, "status": 200})
 
+
+
 @app.route("/users/<int:user_id>", methods=["DELETE"])
 
 def delete_user(user_id):
@@ -99,7 +101,19 @@ def delete_user(user_id):
     if user is None:
         return jsonify({"data": [], "message": "User not found", "success": False, "status": 404}), 404
     list_user_db["users"].remove(user)
-    return jsonify({"data": user, "message": "User data deleted successfully", "success": True, "status": 200})
+    list_user = list_user_db["users"].copy()
+    formatted_user_list = []
+    for user in list_user:
+        formatted_user_list.append(
+            {
+                "id": user["id"],
+                "email": user["email"],
+                "full_name": user["full_name"]
+            }
+        )
+    return jsonify({"data": formatted_user_list, "message": f"User {user["full_name"]} deleted successfully", "success": True, "status": 202})
+
+    
 
     
 
