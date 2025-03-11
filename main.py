@@ -90,7 +90,7 @@ def update_user(user_id):
     user["first_name"] = first_name
     user["last_name"] = last_name
     user["full_name"] = full_name
-    return jsonify({"data": user, "message": "User data updated successfully", "success": True, "status": 200})
+    return jsonify({"data": user, "message": f"User {full_name} updated successfully", "success": True, "status": 200})
 
 
 
