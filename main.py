@@ -16,10 +16,23 @@ list_user_db = {"users": [
     }
 ]}
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def main():
+    list_user = list_user_db["users"].copy()
+    formatted_user_list = []
+    for user in list_user:
+        formatted_user_list.append(
+            {
+                "id": user["id"],
+                "email": user["email"],
+                "full_name": user["full_name"]
+            }
+        )
+    if len(formatted_user_list) < 1:
+        return render_template('index.html', list_user=[])
+    return render_template('index.html', list_user=formatted_user_list)
 
 @app.route("/register", methods=['POST'])
-
 def register():
     register_data = request.json
     email = register_data.get("email")
@@ -49,7 +62,6 @@ def register():
     return jsonify({"data": formatted_user_list, "message": f"User {first_name} created", "success": True, "status": 201})
 
 @app.route("/users", methods=["GET"])
-
 def get_users():
     list_user = list_user_db["users"].copy()
     formatted_user_list = []
