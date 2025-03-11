@@ -4,34 +4,6 @@ import random
 
 app = Flask(__name__)
 
-# @app.error_handler(404)
-
-# list_user_db = {
-#     "users": [
-#         {
-#             "id": 1,
-#             "email": "andi@mail.com",
-#             "password": "anypassword",
-#             "first_name": "andi",
-#             "last_name": "cihuy",
-#             "full_name": "andi cihuy"
-#         },
-#         {
-#             "id": 2,
-#             "email": "bejo@mail.com",
-#             "password": "nopassword",
-#             "first_name": "bejo",
-#             "last_name": "jokowi",
-#             "full_name": "bejo jokowi"
-#         },
-#         {
-#             "id": 3,
-#             "email": "cindy@mail.com",
-#             "password": "passwordwrong"
-#         },
-#     ]
-# }
-
 list_user_db = {"users": [
     { 
         "id": 1,
