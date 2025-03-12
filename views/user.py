@@ -95,3 +95,16 @@ def update_user(user_id):
     user["last_name"] = last_name
     user["full_name"] = full_name
     return jsonify({"data": user, "message": f"User {full_name} updated successfully", "success": True, "status": 200})
+
+def edit_email(user_id):
+    email_data = request.json
+    new_email = email_data.get("new_email")
+    if new_email is None:
+        return jsonify({"message": "Email is required", "success": False, "status": 400}), 400
+    user = next((user for user in list_user_db["users"] if user["id"] == user_id), None)
+    if user is None:
+        return jsonify({"data": [], "message": "User not found", "success": False, "status": 404}), 404
+    if any(user["email"] == new_email for user in list_user_db["users"] if user["id"]!= user_id):
+        return jsonify({"message": "Email already registered", "success": False, "status": 409}), 409
+    user["email"] = new_email
+    return jsonify({"data": user, "message": f"Email updated successfully", "success": True, "status": 200})
