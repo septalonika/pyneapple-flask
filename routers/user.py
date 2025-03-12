@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from views.user import get_users, create_user, delete_user, update_user
+from views.user import get_users, create_user, delete_user, update_user, edit_email
 
 user_router = Blueprint("user_router", __name__, url_prefix="/api/v1/users")
 
@@ -15,7 +15,7 @@ def get_all_users():
             return create_user()
         case default:
             return jsonify({"message": "Invalid request method", "success": False, "status": 405})
-@user_router.route("/<int:user_id>", methods=["GET", "DELETE", "PUT"])
+@user_router.route("/<int:user_id>", methods=["GET", "DELETE", "PUT", "PATCH"])
 def get_detail_user(user_id):
     match request.method.lower():
         case "get":
@@ -28,5 +28,7 @@ def get_detail_user(user_id):
             return delete_user(user_id)
         case "put":
             return update_user(user_id)
+        case "patch":
+            return edit_email(user_id)
         case default:
             return jsonify({"message": "Invalid request method", "success": False, "status": 405})
