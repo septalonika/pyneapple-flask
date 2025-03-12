@@ -1,10 +1,9 @@
-import random
 from datetime import datetime
 from flask import jsonify, request
 from repositories.user import all_users_repository, list_user_db
 
 
-def get_users():
+def get_users(): 
     list_user = all_users_repository()["users"]
     formatted_user_list = []
     for user in list_user:
@@ -41,8 +40,11 @@ def create_user():
             return jsonify({"message": "Password is required", "success": False, "status": 400}), 400
         if len(password) < 8:
             return jsonify({"message": "Password must be at least 8 characters long", "success": False, "status": 400}), 400
+        
+        user_id = max(list(list_user), key=lambda x: x['id'])['id'] + 1 if list_user else 1
+
         user_data = {
-            "id": random.randint(1, 1000),
+            "id": user_id,
             "email": email,     
             "password": password,
             "first_name": first_name,
