@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
+from views.user import get_users, create_user
 
-user_router = Blueprint("user_router", __name__, url_prefix="/users")
+user_router = Blueprint("user_router", __name__, url_prefix="/api/v1/users")
 
-@user_router.route("/users", methods=["GET","POST"])
+@user_router.route("", methods=["GET","POST"])
 def show_users():
     match request.method.lower():
         case "get":
