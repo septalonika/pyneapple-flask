@@ -1,7 +1,7 @@
 import random
 from datetime import datetime
 from flask import jsonify, request
-from repositories.user import all_users_repository
+from repositories.user import all_users_repository, list_user_db
 
 
 def get_users():
