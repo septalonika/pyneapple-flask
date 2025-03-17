@@ -58,7 +58,7 @@ def create_user():
             "email": user_data["email"],
             "full_name": user_data["full_name"]
         }
-        return jsonify({"data": formatted_user_list, "message": f"User {formatted_user_list["full_name"]} created", "success": True, "status": 201})
+        return jsonify({"data": formatted_user_list, "message": f"User {formatted_user_list['full_name']} created", "success": True, "status": 201})
     except:
         return jsonify({"data": [], "message": "user failed to create", "success": False, "status": 500})
         
@@ -77,7 +77,7 @@ def delete_user(user_id):
                 "full_name": user["full_name"]
             }
         )
-    return jsonify({"data": formatted_user_list, "message": f"User {user["full_name"]} deleted successfully", "success": True, "status": 202})
+    return jsonify({"data": formatted_user_list, "message": f"User {user['full_name']} deleted successfully", "success": True, "status": 202})
 
 def update_user(user_id):
     update_data = request.json
